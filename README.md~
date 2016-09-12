@@ -7,7 +7,7 @@ This is a [NEural Simulation Tool (NEST)](http://www.nest-simulator.org/) module
 
 With the joint STDP, we can use the weights and delays to recover the spatiotemporal pattern of cell assemblies (or polychronous neuronal groups) at millisecond scale.
 
-![The joint STDP windows](figures/fig_joint_stdp.png "The joint STDP windows")
+![The joint STDP windows](figuers/fig_joint_stdp.png "The joint STDP windows")
 
 ## Neuron and Synapse Models
 
