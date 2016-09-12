@@ -22,16 +22,29 @@
 
 libdir= @libdir@/nest
 
-lib_LTLIBRARIES=      jointstdpmodule.la libjointstdpmodule.la
+# We need to install the module header for static linking on BlueGene
+include_HEADERS = jointstdpmodule.h
 
-jointstdpmodule_la_CXXFLAGS= @AM_CXXFLAGS@
-jointstdpmodule_la_SOURCES=  jointstdpmodule.cpp      jointstdpmodule.h      \
-                      weight_STDP_connection.h      joint_STDP_connection.h    \
-                      iaf_psc_alpha2.cpp      iaf_psc_alpha2.h
-jointstdpmodule_la_LDFLAGS=  -module
+# All other source files
+source_files=  jointstdpmodule.cpp \
+               base_neuron.cpp      base_neuron.h  \
+               parrot_neuron2.cpp      parrot_neuron2.h  \
+               spike_response_neuron.cpp      spike_response_neuron.h   \
+               base_connection.h  \
+               weight_STDP_connection.h      joint_STDP_connection.h    \
+               immediate_inhibition_connection.h
 
-libjointstdpmodule_la_CXXFLAGS= $(jointstdpmodule_la_CXXFLAGS) -DLINKED_MODULE
-libjointstdpmodule_la_SOURCES=  $(jointstdpmodule_la_SOURCES)
+if BUILD_DYNAMIC_USER_MODULES
+  lib_LTLIBRARIES= libjointstdpmodule.la jointstdpmodule.la
+  jointstdpmodule_la_CXXFLAGS= @AM_CXXFLAGS@
+  jointstdpmodule_la_SOURCES=  $(source_files)
+  jointstdpmodule_la_LDFLAGS=  -module
+else
+  lib_LTLIBRARIES= libjointstdpmodule.la
+endif
+
+libjointstdpmodule_la_CXXFLAGS= @AM_CXXFLAGS@ -DLINKED_MODULE
+libjointstdpmodule_la_SOURCES=  $(source_files)
 
 MAKEFLAGS= @MAKE_FLAGS@
 

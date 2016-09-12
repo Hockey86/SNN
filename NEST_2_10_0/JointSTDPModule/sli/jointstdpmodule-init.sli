@@ -1,0 +1,13 @@
+/*
+ *  jointstdpmodule-init.sli
+ *
+ *  This file is part of JointSTDPModule.
+ */
+
+/*
+ * Initialization file for JointSTDPModule.
+ * Run automatically when JointSTDPModule is loaded.
+ */
+
+M_DEBUG (jointstdpmodule.sli) (Initializing SLI support for JointSTDPModule.) message
+

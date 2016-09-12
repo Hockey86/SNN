@@ -37,11 +37,13 @@
 
 // include headers with your own stuff
 #include "jointstdpmodule.h"
+#include "parrot_neuron2.h"
+#include "spike_response_neuron.h"
 //#include "weight_stdp_axonal_connection.h"
 //#include "joint_stdp_axonal_connection.h"
 #include "weight_stdp_connection.h"
 #include "joint_stdp_connection.h"
-#include "iaf_psc_alpha2.h"
+#include "immediate_inhibition_connection.h"
 
 // -- Interface to dynamic module loader ---------------------------------------
 
@@ -92,8 +94,10 @@ mynest::JointSTDPModule::~JointSTDPModule()
        The first argument is always a reference to the network.
        Return value is a handle for later unregistration.
     */
-    nest::register_model<iaf_psc_alpha2>(nest::NestModule::get_network(),
-                                        "iaf_psc_alpha2");
+    nest::register_model<parrot_neuron2>(nest::NestModule::get_network(),
+                                        "parrot_neuron2");
+    nest::register_model<spike_response_neuron>(nest::NestModule::get_network(),
+                                        "spike_response_neuron");
 
     /* Register a synapse type.
        Give synapse type as template argument and the name as second argument.
@@ -115,6 +119,8 @@ mynest::JointSTDPModule::~JointSTDPModule()
 										       "weight_stdp_synapse");
     nest::register_connection_model<JointSTDPConnection<nest::TargetIdentifierPtrRport> >(nest::NestModule::get_network(),
 										       "joint_stdp_synapse");
+    nest::register_connection_model<ImmediateInhibitionConnection<nest::TargetIdentifierPtrRport> >(nest::NestModule::get_network(),
+										       "immediate_inhibition_synapse");
 
     /* Register a SLI function.
        The first argument is the function name for SLI, the second a pointer to
